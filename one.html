@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица 5x6 со случайными числами</title>
+    <style>
+        table { border-collapse: collapse; margin-top: 20px; }
+        td { border: 1px solid #000; padding: 10px; text-align: center; }
+        .highlight { background-color: orange; }
+    </style>
+</head>
+<body>
+    <div id="table-container"></div>
+    <script>
+        // Создаем массив с 30 случайными числами от 0 до 99
+        const randomNumbers = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
+
+        // Создаем таблицу 5x6 и заполняем ее числами
+        const tableContainer = document.getElementById("table-container");
+        const table = document.createElement("table");
+
+        let index = 0;
+        for (let row = 0; row < 5; row++) {
+            const tableRow = document.createElement("tr");
+
+            for (let col = 0; col < 6; col++) {
+                const tableCell = document.createElement("td");
+                const number = randomNumbers[index++];
+                
+                tableCell.innerText = number;
+
+                // Окрашиваем ячейку, если число >= 50
+                if (number >= 50) {
+                    tableCell.classList.add("highlight");
+                }
+
+                tableRow.appendChild(tableCell);
+            }
+
+            table.appendChild(tableRow);
+        }
+
+        // Добавляем таблицу в контейнер
+        tableContainer.appendChild(table);
+    </script>
+</body>
+</html>
