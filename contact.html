@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Популярные направления</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="directions">
+        <h1>Популярные направления</h1>
+        <div class="card" data-info="Нью-Йорк - город, который никогда не спит!">
+            <h2>Нью-Йорк</h2>
+        </div>
+        <div class="card" data-info="Париж - город любви и красоты.">
+            <h2>Париж</h2>
+        </div>
+        <div class="card" data-info="Токио - город будущего с древними корнями.">
+            <h2>Токио</h2>
+        </div>
+    </main>
+    <div id="popup" class="popup">
+        <p id="popupText"></p>
+        <button onclick="closePopup()">Закрыть</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,10 +1,14 @@
-document.getElementById("exploreButton").addEventListener("click", () => {
-    const introSection = document.getElementById("intro");
-    introSection.scrollIntoView({ behavior: "smooth" });
+const cards = document.querySelectorAll(".card");
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popupText");
+
+cards.forEach(card => {
+    card.addEventListener("click", () => {
+        popupText.innerText = card.dataset.info;
+        popup.style.display = "block";
+    });
 });
 
-window.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-        document.getElementById("exploreButton").click();
-    }
-});
+function closePopup() {
+    popup.style.display = "none";
+}

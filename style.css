@@ -1,29 +1,32 @@
-body {
-    font-family: Arial, sans-serif;
+.directions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(120deg, #84fab0, #8fd3f4);
 }
-header h1 {
-    font-size: 2.5em;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-button {
-    padding: 10px 20px;
-    font-size: 1em;
+.card {
+    width: 200px;
+    height: 150px;
+    margin: 20px;
+    background: #4CAF50;
     color: white;
-    background: #333;
-    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: transform 0.3s;
 }
-button:hover {
-    background: #555;
+.card:hover {
+    transform: scale(1.1);
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
 }
