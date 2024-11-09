@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма Банковской Карты</title>
+    <style>
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .form-container {
+            width: 300px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+        }
+        .card-preview {
+            width: 200px;
+            height: 120px;
+            padding: 15px;
+            background: #333;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-bank, .card-type {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .card-number, .card-holder, .card-expiry {
+            font-size: 12px;
+        }
+        .card-preview-placeholder {
+            background: #555;
+            width: 60px;
+            height: 20px;
+            border-radius: 5px;
+        }
+        .table-container {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="cardForm" class="form-container">
+            <div class="form-group">
+                <label for="bankName">Название банка</label>
+                <input type="text" id="bankName" name="bankName" required oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label for="paymentSystem">Тип платежной системы</label>
+                <select id="paymentSystem" name="paymentSystem" required onchange="updatePreview()">
+                    <option value="" disabled selected>Выберите систему</option>
+                    <option value="Visa">Visa</option>
+                    <option value="MasterCard">MasterCard</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cardNumber">Номер карты</label>
+                <input type="text" id="cardNumber" name="cardNumber" maxlength="16" pattern="\d{16}" required oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label for="cardHolder">Имя держателя карты</label>
+                <input type="text" id="cardHolder" name="cardHolder" required oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">Месяц и год окончания карты</label>
+                <input type="month" id="expiryDate" name="expiryDate" required oninput="updatePreview()">
+            </div>
+            <button type="submit">Добавить карту</button>
+        </form>
+
+        <div class="card-preview">
+            <div class="card-bank" id="previewBank">Название Банка</div>
+            <div class="card-type" id="previewType">Тип Системы</div>
+            <div class="card-number" id="previewNumber">#### #### #### ####</div>
+            <div class="card-holder" id="previewHolder">Имя Держателя</div>
+            <div class="card-expiry" id="previewExpiry">MM/YY</div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="cardsTable">
+            <thead>
+                <tr>
+                    <th>Банк</th>
+                    <th>Тип системы</th>
+                    <th>Номер карты</th>
+                    <th>Имя держателя</th>
+                    <th>Срок действия</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const cardForm = document.getElementById("cardForm");
+
+        function updatePreview() {
+            document.getElementById("previewBank").innerText = document.getElementById("bankName").value || "Название Банка";
+            document.getElementById("previewType").innerText = document.getElementById("paymentSystem").value || "Тип Системы";
+            document.getElementById("previewNumber").innerText = document.getElementById("cardNumber").value.replace(/(\d{4})(?=\d)/g, "$1 ") || "#### #### #### ####";
+            document.getElementById("previewHolder").innerText = document.getElementById("cardHolder").value || "Имя Держателя";
+            document.getElementById("previewExpiry").innerText = document.getElementById("expiryDate").value ? document.getElementById("expiryDate").value.replace("-", "/") : "MM/YY";
+        }
+
+        cardForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const bankName = document.getElementById("bankName").value;
+            const paymentSystem = document.getElementById("paymentSystem").value;
+            const cardNumber = document.getElementById("cardNumber").value;
+            const cardHolder = document.getElementById("cardHolder").value;
+            const expiryDate = document.getElementById("expiryDate").value.replace("-", "/");
+
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${bankName}</td>
+                <td>${paymentSystem}</td>
+                <td>${cardNumber.replace(/(\d{4})(?=\d)/g, "$1 ")}</td>
+                <td>${cardHolder}</td>
+                <td>${expiryDate}</td>
+            `;
+            document.querySelector("#cardsTable tbody").appendChild(newRow);
+
+            // Очистка формы и миниатюры
+            cardForm.reset();
+            updatePreview();
+        });
+    </script>
+</body>
+</html>
